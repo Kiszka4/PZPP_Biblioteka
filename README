@@ -1,0 +1,1 @@
+Projekt programu do katalogowania książek. W założeniu, program będzie pozwalał na edycje katalogu (operacje dodaj, usuń oraz modyfikuj) - edycji będą mogły być poddane książki (gatunek, rok wydania, tytuł itp.) oraz autorzy książek (imię, nazwisko).
