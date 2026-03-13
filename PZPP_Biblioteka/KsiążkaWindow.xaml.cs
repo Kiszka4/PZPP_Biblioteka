@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,13 +16,19 @@ using System.Windows.Shapes;
 namespace PZPP_Biblioteka
 {
     /// <summary>
-    /// Logika interakcji dla klasy KsiążkaWindow.xaml
+    /// Logika interakcji dla klasy ProduktyWindow.xaml
     /// </summary>
     public partial class KsiążkaWindow : Window
     {
-        public KsiążkaWindow()
+        private KsiążkaViewModel _viewModel;
+
+        public KsiążkaWindow(KsiążkaViewModel viewModel)
         {
             InitializeComponent();
+            _viewModel = viewModel;
+            DataContext = _viewModel;
         }
+
+
     }
 }

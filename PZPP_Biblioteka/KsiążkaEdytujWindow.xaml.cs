@@ -19,9 +19,20 @@ namespace PZPP_Biblioteka
     /// </summary>
     public partial class KsiążkaEdytujWindow : Window
     {
-        public KsiążkaEdytujWindow()
+        private readonly Biblioteka _context;
+
+        public KsiążkaEdytujWindow(Biblioteka context, Książka książka)
         {
             InitializeComponent();
+            _context = context;
+            var viewModel = new KsiążkaViewModel(_context)
+            {
+                SelectedKsiążka = książka
+            };
+            DataContext = viewModel;
+            viewModel.ZamknijOkno += () => this.Close();
+
         }
+
     }
 }

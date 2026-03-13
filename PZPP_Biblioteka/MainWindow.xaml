@@ -8,18 +8,18 @@
         Title="Biblioteka - Zarządzanie" Height="300" Width="650">
     <Grid Background="#f9f9f9">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="20" >
-            <Button Content="Zarządzaj Kategoriami"
-                    Command="{Binding OpenKategorieWindowCommand}"
+            <Button Content="Zarządzaj Gatunkami"
+                    Command="{Binding OpenGatunekWindowCommand}"
                     Width="180" Height="60" Margin="10"
                     Background="LightBlue" FontWeight="Bold"/>
 
-            <Button Content="Zarządzaj Produktami"
-                    Command="{Binding OpenProduktyWindowCommand}"
+            <Button Content="Zarządzaj Książkami"
+                    Command="{Binding OpenKsiążkaWindowCommand}"
                     Width="180" Height="60" Margin="10"
                     Background="LightGreen" FontWeight="Bold"/>
 
-            <Button Content="Zarządzaj Zamówieniami"
-                    Command="{Binding OpenZamowieniaWindowCommand}"
+            <Button Content="Zarządzaj Autorami"
+                    Command="{Binding OpenAutorWindowCommand}"
                     Width="180" Height="60" Margin="10"
                     Background="LightYellow" FontWeight="Bold"/>
         </StackPanel>

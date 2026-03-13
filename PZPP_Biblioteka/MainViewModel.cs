@@ -12,36 +12,36 @@ namespace PZPP_Biblioteka
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public ICommand OpenKategorieWindowCommand { get; }
-        public ICommand OpenProduktyWindowCommand { get; }
-        public ICommand OpenZamowieniaWindowCommand { get; }
+        public ICommand OpenGatunekWindowCommand { get; }
+        public ICommand OpenKsiążkaWindowCommand { get; }
+        public ICommand OpenAutorWindowCommand { get; }
 
         public MainViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            OpenKategorieWindowCommand = new RelayCommand(OpenKategorieWindow);
-            OpenProduktyWindowCommand = new RelayCommand(OpenProduktyWindow);
-            OpenZamowieniaWindowCommand = new RelayCommand(OpenZamowieniaWindow);
+            OpenGatunekWindowCommand = new RelayCommand(OpenGatunekWindow);
+            OpenKsiążkaWindowCommand = new RelayCommand(OpenKsiążkaWindow);
+            //OpenZamowieniaWindowCommand = new RelayCommand(OpenZamowieniaWindow);
         }
 
-        private void OpenKategorieWindow(object obj)
+        private void OpenGatunekWindow(object obj)
         {
-            var window = _serviceProvider.GetRequiredService<KategorieWindow>();
-            var viewModel = _serviceProvider.GetRequiredService<KategorieViewModel>();
+            var window = _serviceProvider.GetRequiredService<GatunekWindow>();
+            var viewModel = _serviceProvider.GetRequiredService<GatunekViewModel>();
             window.DataContext = viewModel;
-            viewModel.OdswiezKategorie();
+            viewModel.OdswiezGatunek();
             window.ShowDialog();
         }
 
-        private void OpenProduktyWindow(object obj)
+        private void OpenKsiążkaWindow(object obj)
         {
-            var window = _serviceProvider.GetRequiredService<ProduktyWindow>();
-            var viewModel = _serviceProvider.GetRequiredService<ProduktyViewModel>();
+            var window = _serviceProvider.GetRequiredService<KsiążkaWindow>();
+            var viewModel = _serviceProvider.GetRequiredService<KsiążkaViewModel>();
             window.DataContext = viewModel;
-            viewModel.OdswiezProdukty();
+            viewModel.OdswiezKsiążki();
             window.ShowDialog();
         }
-
+        /*
         private void OpenZamowieniaWindow(object obj)
         {
             var window = _serviceProvider.GetRequiredService<ZamowieniaWindow>();
@@ -50,5 +50,6 @@ namespace PZPP_Biblioteka
             viewModel.OdswiezZamowienia();
             window.ShowDialog();
         }
+        */
     }
 }

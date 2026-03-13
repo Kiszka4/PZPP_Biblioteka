@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
 
 namespace PZPP_Biblioteka
 {
@@ -12,38 +11,40 @@ namespace PZPP_Biblioteka
     {
         public static void Inicjuj(Biblioteka context)
         {
+            if (context.Książki.Any())
+                return;
+
             var faker = new Faker("pl");
 
-            var gatunki = new List<Gatunek>
+            var gatunki = new List<GatunekKsiążki>
         {
-            new Gatunek { Nazwa = "Horror" },
-            new Gatunek { Nazwa = "Obyczajowa" },
-            new Gatunek { Nazwa = "Romans" },
-            new Gatunek { Nazwa = "Sci-Fi" },
-            new Gatunek { Nazwa = "Fantasy" },
-            new Gatunek { Nazwa = "Thriller" },
-            new Gatunek { Nazwa = "Kryminał" },
-            new Gatunek { Nazwa = "Biografia" },
-            new Gatunek { Nazwa = "Historia" }
+            new GatunekKsiążki { Nazwa = "Horror" },
+            new GatunekKsiążki { Nazwa = "Obyczajowa" },
+            new GatunekKsiążki { Nazwa = "Romans" },
+            new GatunekKsiążki { Nazwa = "Sci-Fi" },
+            new GatunekKsiążki { Nazwa = "Fantasy" },
+            new GatunekKsiążki { Nazwa = "Thriller" },
+            new GatunekKsiążki { Nazwa = "Kryminał" },
+            new GatunekKsiążki { Nazwa = "Biografia" },
+            new GatunekKsiążki { Nazwa = "Historia" }
 
         };
 
-            var książki = new Faker<Książka>()
-                .RuleFor(p => p.Tytuł, faker => faker.Lorem.Sentence(3, 5))
+            var książki = new Faker<Książka>("pl")
+                .RuleFor(k => k.Tytuł, f => f.Lorem.Sentence(3))
                 .RuleFor(p => p.IloscNaStanie, f => f.Random.Int(0, 40))
-                //.RuleFor(p => p.CenaJednostkowa, f => Math.Round(f.Random.Double(1, 3000), 2))
+                .RuleFor(p => p.ISBN, f => f.Random.Int(0000000000, 999999999))
                 //.RuleFor(p => p.VAT, f => Math.Round(f.Random.Double(0.05, 0.23), 2))
-                .RuleFor(p => p.Gatunek, f => f.PickRandom(gatunki))
+                .RuleFor(p => p.GatunekKsiążki, f => f.PickRandom(gatunki))
                 .Generate(20);
 
             var autorzy = new Faker<Autor>()
                 .RuleFor(k => k.Imię, f => f.Name.FirstName())
                 .RuleFor(k => k.Nazwisko, f => f.Name.LastName())
-                .RuleFor(k => k.ID, f => f.Random.Int(0000, 9999))
                 .Generate(20);
 
 
-            context.Gatunki.AddRange(gatunki);
+            context.GatunkiKsiążek.AddRange(gatunki);
             context.Książki.AddRange(książki);
             context.Autorzy.AddRange(autorzy);
             context.SaveChanges();

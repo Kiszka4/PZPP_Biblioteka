@@ -15,13 +15,19 @@ using System.Windows.Shapes;
 namespace PZPP_Biblioteka
 {
     /// <summary>
-    /// Logika interakcji dla klasy GatunekDodajWindow.xaml
+    /// Logika interakcji dla klasy KategorieDodajWindow.xaml
     /// </summary>
     public partial class GatunekDodajWindow : Window
     {
-        public GatunekDodajWindow()
+        private readonly Biblioteka _context;
+
+        public GatunekDodajWindow(Biblioteka context)
         {
             InitializeComponent();
+            _context = context;
+            var viewModel = new GatunekZapiszViewModel(_context);
+            DataContext = viewModel;
+            viewModel.ZamknijOkno += () => this.Close();
         }
     }
 }

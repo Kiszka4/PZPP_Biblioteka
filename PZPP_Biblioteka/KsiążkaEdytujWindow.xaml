@@ -1,12 +1,25 @@
 ﻿<Window x:Class="PZPP_Biblioteka.KsiążkaEdytujWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PZPP_Biblioteka"
-        mc:Ignorable="d"
-        Title="KsiążkaEdytujWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Edytuj Produkt" Height="400" Width="400" WindowStartupLocation="CenterOwner">
+    <Grid Margin="10" Background="LightGreen">
+        <StackPanel>
+            <Label Content="Tytuł:"/>
+            <TextBox Text="{Binding SelectedKsiążka.Tytuł, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Content="Autor:"/>
+            <TextBox Text="{Binding SelectedKsiążka.Autor, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Content="Ilość na stanie:"/>
+            <TextBox Text="{Binding SelectedKsiążka.IloscNaStanie, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Content="ISBN:"/>
+            <TextBox Text="{Binding SelectedKsiążka.ISBN, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Content="ID gatunku:"/>
+            <TextBox Text="{Binding SelectedKsiążka.GatunekID, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Button Content="Zapisz" Command="{Binding ZapiszKsiążkaCommand}" Margin="0,10,0,0" HorizontalAlignment="Right" Width="100" />
+        </StackPanel>
     </Grid>
 </Window>

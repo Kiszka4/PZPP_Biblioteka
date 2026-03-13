@@ -11,17 +11,26 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace PZPP_Biblioteka
 {
     /// <summary>
-    /// Logika interakcji dla klasy GatunekWindow.xaml
+    /// Logika interakcji dla klasy KategorieWindow.xaml
     /// </summary>
     public partial class GatunekWindow : Window
     {
-        public GatunekWindow()
+        private GatunekViewModel _viewModel;
+
+
+        public GatunekWindow(GatunekViewModel viewModel)
         {
             InitializeComponent();
+            _viewModel = viewModel;
+            DataContext = _viewModel;
         }
+
+
     }
 }

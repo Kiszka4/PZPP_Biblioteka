@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PZPP_Biblioteka
 {
-    public class Gatunek
+    public class GatunekKsiążki
     {
         public int ID { get; set; }
         public string Nazwa { get; set; }
-        public ICollection<Gatunek> Gatunki { get; set; }
+        public ICollection<Książka> Książki { get; set; }
     }
 }

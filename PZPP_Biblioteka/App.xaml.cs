@@ -5,8 +5,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.InMemory;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using Microsoft.Data.SqlClient;
 using PZPP_Biblioteka;
 
 
@@ -21,22 +19,19 @@ namespace PZPP_Biblioteka
 
         public App()
         {
-
-            AppHost = Host.CreateDefaultBuilder()
+            AppHost = Host.CreateDefaultBuilder() // Fully qualify the Host class
                 .ConfigureServices((context, services) =>
                 {
-
                     services.AddDbContext<Biblioteka>(options =>
-                        options.UseSqlServer("Data Source=.;Initial Catalog=SklepKomputerowy;Integrated Security=True;TrustServerCertificate=True"));
-
+                        options.UseInMemoryDatabase("BibliotekaDB"));
 
                     services.AddTransient<MainViewModel>();
                     services.AddTransient<GatunekViewModel>();
-                    services.AddTransient<GatunekDodajViewModel>();
+                    services.AddTransient<GatunekZapiszViewModel>();
                     services.AddTransient<KsiążkaViewModel>();
-                    services.AddTransient<KsiążkaDodajViewModel>();
+                    services.AddTransient<KsiążkaZapiszViewModel>();
 
-                   //services.AddTransient<ZamowieniaViewModel>();
+                    //services.AddTransient<ZamowieniaViewModel>();
                     //services.AddTransient<ZamowieniaDodajViewModel>();
 
                     services.AddSingleton<MainWindow>();
@@ -54,7 +49,6 @@ namespace PZPP_Biblioteka
                     services.AddTransient<KsiążkaEdytujWindow>();
 
                     //services.AddTransient<ZamowieniaEdytujWindow>();
-
                 })
                 .Build();
         }
@@ -66,7 +60,7 @@ namespace PZPP_Biblioteka
             using (var scope = AppHost.Services.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<Biblioteka>();
-                context.Database.Migrate();
+                InicjujDane.Inicjuj(context);
             }
 
 

@@ -1,12 +1,15 @@
 ﻿<Window x:Class="PZPP_Biblioteka.GatunekEdytujWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PZPP_Biblioteka"
-        mc:Ignorable="d"
-        Title="GatunekEdytujWindow" Height="450" Width="800">
-    <Grid>
-        
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        Title="Edytuj Gatunek" Height="150" Width="300" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid Margin="10" Background="LightBlue">
+        <StackPanel>
+            <Label Content="Nazwa gatunku:"/>
+            <TextBox Text="{Binding SelectedGatunek.Nazwa, UpdateSourceTrigger=PropertyChanged}" Margin="0,5"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button Content="Zapisz" Width="75" Margin="5,0" Command="{Binding ZapiszKategorieCommand}" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PZPP_Biblioteka"
         mc:Ignorable="d"
-        Title="KsiążkaDodajWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Dodaj Książkę" Height="350" Width="400">
+    <Grid Margin="10" Background="LightGreen">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Tytuł:" VerticalAlignment="Center" Margin="5"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Tytuł, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Autor:" VerticalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Autor}"
+                  DisplayMemberPath="Nazwa" SelectedItem="{Binding WybranyAutor, Mode=TwoWay}"
+                  Margin="5"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Ilość na stanie:" VerticalAlignment="Center" Margin="5"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding IloscNaStanie, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Kategoria:" VerticalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Gatunki}"
+                  DisplayMemberPath="Nazwa" SelectedItem="{Binding WybranyGatunek, Mode=TwoWay}"
+                  Margin="5"/>
+
+        <Button Grid.Row="6" Grid.ColumnSpan="2" Content="Zapisz" Command="{Binding ZapiszCommand}"
+                HorizontalAlignment="Right" Width="100" Margin="5"/>
     </Grid>
 </Window>

@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PZPP_Biblioteka"
         mc:Ignorable="d"
-        Title="GatunekWindow" Height="450" Width="800">
+        Title="Zarządzaj Gatunkami" Height="450" Width="400">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+
+        <ListView Grid.Row="1" ItemsSource="{Binding Gatunki}"
+                  SelectedItem="{Binding SelectedGatunek, Mode=TwoWay}"
+                  Background="LightBlue"
+                  Margin="5">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="50"/>
+                    <GridViewColumn Header="Nazwa" DisplayMemberBinding="{Binding Nazwa}" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button Content="Dodaj" Command="{Binding PokazDodajGatunekCommand}" Margin="5"/>
+            <Button Content="Edytuj" Command="{Binding EdytujGatunekCommand}" Margin="5"/>
+            <Button Content="Usuń" Command="{Binding UsunGatunekCommand}" Margin="5"/>
+        </StackPanel>
     </Grid>
 </Window>
