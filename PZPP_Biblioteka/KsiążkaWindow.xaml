@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PZPP_Biblioteka" d:DataContext="{d:DesignInstance Type=local:KsiążkaZapiszViewModel}"
+        xmlns:local="clr-namespace:PZPP_Biblioteka"
         mc:Ignorable="d"
         Title="Zarządzaj Książkami" Height="600" Width="800">
     <Grid>
@@ -11,43 +11,35 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
         <ListView Grid.Row="0" ItemsSource="{Binding Książki}"
                   SelectedItem="{Binding SelectedKsiążka, Mode=TwoWay}"
-                  Background="LightGreen"
-                  Margin="5">
+                  Background="LightGreen" Margin="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="Red" BorderThickness="1" CornerRadius="5" Margin="2" Padding="5">
+                    <Border BorderBrush="DarkGreen" BorderThickness="1" CornerRadius="5" Margin="2" Padding="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="150"/>
                             </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Column="0" Text="{Binding ISBN}" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Grid.Column="0" Text="{Binding ISBN}" FontWeight="Bold" VerticalAlignment="Center"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5,0">
                                 <TextBlock Text="{Binding Tytuł}" FontWeight="Bold" FontSize="14"/>
                                 <TextBlock Text="{Binding GatunekKsiążki.Nazwa}" FontStyle="Italic" Foreground="Gray"/>
                             </StackPanel>
-                            <TextBlock Grid.Column="2" Text="{Binding IloscNaStanie, StringFormat='{}Ilość: {0}'}" VerticalAlignment="Center" Margin="10,0"/>
-                            <TextBlock Grid.Column="3" Text="{Binding Autor.Imie}" VerticalAlignment="Center" Margin="10,0"/>
-                            <TextBlock Grid.Column="3" Text="{Binding Autor.Nazwisko}" VerticalAlignment="Center" Margin="10,0"/>
-
+                            <TextBlock Grid.Column="2" Text="{Binding IloscNaStanie, StringFormat='{}Ilość: {0}'}" VerticalAlignment="Center" Margin="5,0"/>
+                            <TextBlock Grid.Column="3" Text="{Binding Autor.PełneNazwisko}" VerticalAlignment="Center" Margin="5,0"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-            <Button Content="Dodaj Produkt" Command="{Binding PokazDodajKsiążkaCommand}" Margin="5"/>
-            <Button Content="Edytuj Wybrany" Command="{Binding EdytujKsiążkaCommand}" Margin="5"/>
-            <Button Content="Usuń Wybrany" Command="{Binding UsunKsiążkaCommand}" Margin="5"/>
+            <Button Content="Dodaj Książkę" Command="{Binding PokazDodajKsiążkaCommand}" Margin="5"/>
+            <Button Content="Edytuj Wybraną" Command="{Binding EdytujKsiążkaCommand}" Margin="5"/>
+            <Button Content="Usuń Wybraną" Command="{Binding UsunKsiążkaCommand}" Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>

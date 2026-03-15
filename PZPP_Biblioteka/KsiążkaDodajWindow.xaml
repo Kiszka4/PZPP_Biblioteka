@@ -1,14 +1,9 @@
 ﻿<Window x:Class="PZPP_Biblioteka.KsiążkaDodajWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PZPP_Biblioteka"
-        mc:Ignorable="d"
-        Title="Dodaj Książkę" Height="350" Width="400">
+        Title="Dodaj Książkę" Height="300" Width="400">
     <Grid Margin="10" Background="LightGreen">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -24,20 +19,20 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Tytuł:" VerticalAlignment="Center" Margin="5"/>
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Tytuł, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Autor:" VerticalAlignment="Center" Margin="5"/>
-        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Autor}"
-                  DisplayMemberPath="Nazwa" SelectedItem="{Binding WybranyAutor, Mode=TwoWay}"
-                  Margin="5"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Autor:" VerticalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Autorzy}"
+                  DisplayMemberPath="PełneNazwisko"
+                  SelectedItem="{Binding WybranyAutor, Mode=TwoWay}" Margin="5"/>
 
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Ilość na stanie:" VerticalAlignment="Center" Margin="5"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding IloscNaStanie, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Ilość na stanie:" VerticalAlignment="Center" Margin="5"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding IloscNaStanie, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
 
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Kategoria:" VerticalAlignment="Center" Margin="5"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Gatunki}"
-                  DisplayMemberPath="Nazwa" SelectedItem="{Binding WybranyGatunek, Mode=TwoWay}"
-                  Margin="5"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Gatunek:" VerticalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Gatunki}"
+                  DisplayMemberPath="Nazwa"
+                  SelectedItem="{Binding WybranyGatunek, Mode=TwoWay}" Margin="5"/>
 
-        <Button Grid.Row="6" Grid.ColumnSpan="2" Content="Zapisz" Command="{Binding ZapiszCommand}"
+        <Button Grid.Row="5" Grid.ColumnSpan="2" Content="Zapisz" Command="{Binding ZapiszCommand}"
                 HorizontalAlignment="Right" Width="100" Margin="5"/>
     </Grid>
 </Window>

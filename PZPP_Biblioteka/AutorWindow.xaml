@@ -1,0 +1,27 @@
+﻿<Window x:Class="PZPP_Biblioteka.AutorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Zarządzaj Autorami" Height="450" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListView Grid.Row="0" ItemsSource="{Binding Autorzy}"
+                  SelectedItem="{Binding SelectedAutor, Mode=TwoWay}"
+                  Background="LightYellow" Margin="5">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="50"/>
+                    <GridViewColumn Header="Imię" DisplayMemberBinding="{Binding Imię}" Width="120"/>
+                    <GridViewColumn Header="Nazwisko" DisplayMemberBinding="{Binding Nazwisko}" Width="150"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button Content="Dodaj" Command="{Binding PokazDodajAutorCommand}" Margin="5"/>
+            <Button Content="Edytuj" Command="{Binding EdytujAutorCommand}" Margin="5"/>
+            <Button Content="Usuń" Command="{Binding UsunAutorCommand}" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>

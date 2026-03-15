@@ -14,9 +14,10 @@ namespace PZPP_Biblioteka
         public string Tytuł { get; set; }
         public int IloscNaStanie { get; set; }
 
-        public GatunekKsiążki GatunekKsiążki { get; set; }
+        
         public Autor Autor { get; set; }
-
+        public int? AutorID { get; set; }
+        public GatunekKsiążki GatunekKsiążki { get; set; }
         public int GatunekID { get; set; }
     }
 }

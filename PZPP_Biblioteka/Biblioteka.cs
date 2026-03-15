@@ -11,18 +11,10 @@ namespace PZPP_Biblioteka
     public class Biblioteka : DbContext
     {
         public DbSet<Książka> Książki { get; set; }
-        //public DbSet<Gatunek> Gatunki { get; set; }
         public DbSet<GatunekKsiążki> GatunkiKsiążek { get; set; }
-        //public DbSet<Zamowienie> Zamowienia { get; set; }
-        //public DbSet<PozycjaZamowienia> PozycjeZamowienia { get; set; }
-        //public DbSet<Klient> Klienci { get; set; }
-
         public DbSet<Autor> Autorzy { get; set; }
 
-        public Biblioteka(DbContextOptions<Biblioteka> options)
-            : base(options)
-        {
-        }
+        public Biblioteka(DbContextOptions<Biblioteka> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,12 +22,11 @@ namespace PZPP_Biblioteka
                 .HasMany(k => k.Książki)
                 .WithOne(p => p.GatunekKsiążki)
                 .HasForeignKey(p => p.GatunekID);
-/*
-            modelBuilder.Entity<PozycjaZamowienia>()
-                .HasOne(pz => pz.Zamowienie)
-                .WithMany(z => z.PozycjeZamowienia)
-                .HasForeignKey(pz => pz.ZamowienieID);
-*/
+
+            modelBuilder.Entity<Autor>()
+                .HasMany(a => a.Książki)
+                .WithOne(k => k.Autor)
+                .HasForeignKey(k => k.AutorID);
         }
     }
 }

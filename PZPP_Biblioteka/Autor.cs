@@ -11,6 +11,7 @@ namespace PZPP_Biblioteka
         public int ID { get; set; }
         public string Imię { get; set; }
         public string Nazwisko { get; set; }
+        public string PełneNazwisko => $"{Imię} {Nazwisko}";
         public List<Książka> Książki { get; set; }
     }
 }

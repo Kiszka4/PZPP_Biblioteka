@@ -1,9 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PZPP_Biblioteka
@@ -21,7 +17,7 @@ namespace PZPP_Biblioteka
             _serviceProvider = serviceProvider;
             OpenGatunekWindowCommand = new RelayCommand(OpenGatunekWindow);
             OpenKsiążkaWindowCommand = new RelayCommand(OpenKsiążkaWindow);
-            //OpenZamowieniaWindowCommand = new RelayCommand(OpenZamowieniaWindow);
+            OpenAutorWindowCommand = new RelayCommand(OpenAutorWindow);
         }
 
         private void OpenGatunekWindow(object obj)
@@ -41,15 +37,14 @@ namespace PZPP_Biblioteka
             viewModel.OdswiezKsiążki();
             window.ShowDialog();
         }
-        /*
-        private void OpenZamowieniaWindow(object obj)
+
+        private void OpenAutorWindow(object obj)
         {
-            var window = _serviceProvider.GetRequiredService<ZamowieniaWindow>();
-            var viewModel = _serviceProvider.GetRequiredService<ZamowieniaViewModel>();
+            var window = _serviceProvider.GetRequiredService<AutorWindow>();
+            var viewModel = _serviceProvider.GetRequiredService<AutorViewModel>();
             window.DataContext = viewModel;
-            viewModel.OdswiezZamowienia();
+            viewModel.OdswiezAutorzy();
             window.ShowDialog();
         }
-        */
     }
 }
