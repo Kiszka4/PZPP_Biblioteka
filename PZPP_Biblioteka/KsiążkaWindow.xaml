@@ -13,6 +13,7 @@
         </Grid.RowDefinitions>
         <ListView Grid.Row="0" ItemsSource="{Binding Książki}"
                   SelectedItem="{Binding SelectedKsiążka, Mode=TwoWay}"
+                  MouseDoubleClick="ListView_MouseDoubleClick"
                   Background="LightGreen" Margin="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -23,14 +24,16 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="90"/>
                                 <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{Binding ISBN}" FontWeight="Bold" VerticalAlignment="Center"/>
                             <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5,0">
                                 <TextBlock Text="{Binding Tytuł}" FontWeight="Bold" FontSize="14"/>
                                 <TextBlock Text="{Binding GatunekKsiążki.Nazwa}" FontStyle="Italic" Foreground="Gray"/>
                             </StackPanel>
-                            <TextBlock Grid.Column="2" Text="{Binding IloscNaStanie, StringFormat='{}Ilość: {0}'}" VerticalAlignment="Center" Margin="5,0"/>
+                            <TextBlock Grid.Column="2" Text="{Binding IloscNaStanie, StringFormat='Ilość: {0}'}" VerticalAlignment="Center" Margin="5,0"/>
                             <TextBlock Grid.Column="3" Text="{Binding Autor.PełneNazwisko}" VerticalAlignment="Center" Margin="5,0"/>
+                            <TextBlock Grid.Column="4" Text="{Binding DostepnoscWBibliotece2, StringFormat='IlośćWFilli: {0}'}" VerticalAlignment="Center" Margin="5,0"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
@@ -40,6 +43,8 @@
             <Button Content="Dodaj Książkę" Command="{Binding PokazDodajKsiążkaCommand}" Margin="5"/>
             <Button Content="Edytuj Wybraną" Command="{Binding EdytujKsiążkaCommand}" Margin="5"/>
             <Button Content="Usuń Wybraną" Command="{Binding UsunKsiążkaCommand}" Margin="5"/>
+            <Button Content="Sortuj A-Z" Command="{Binding SortujCommand}" Margin="5"/>
+            <TextBox Width="200" Margin="5" Text="{Binding Wyszukaj, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
     </Grid>
 </Window>

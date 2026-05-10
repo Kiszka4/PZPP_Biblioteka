@@ -7,8 +7,10 @@
             <Label Content="Tytuł:"/>
             <TextBox Text="{Binding SelectedKsiążka.Tytuł, UpdateSourceTrigger=PropertyChanged}" />
 
-            <Label Content="Autor:"/>
-            <TextBox Text="{Binding SelectedKsiążka.Autor, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Autor:" VerticalAlignment="Center" Margin="5"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Autorzy}"
+                  DisplayMemberPath="PełneNazwisko"
+                  SelectedItem="{Binding WybranyAutor, Mode=TwoWay}" Margin="5"/>
 
             <Label Content="Ilość na stanie:"/>
             <TextBox Text="{Binding SelectedKsiążka.IloscNaStanie, UpdateSourceTrigger=PropertyChanged}" />

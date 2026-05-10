@@ -43,19 +43,49 @@ namespace PZPP_Biblioteka
 
         private void Zapisz(object obj)
         {
+            // WALIDACJA
+
+            if (string.IsNullOrWhiteSpace(Nazwa))
+            {
+                MessageBox.Show(
+                    "Nazwa gatunku nie może być pusta.",
+                    "Błąd",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            // PRZYPISANIE DANYCH
+
             _gatunek.Nazwa = Nazwa;
 
-            if (_gatunek.ID == 0)
+            try
             {
-                _context.GatunkiKsiążek.Add(_gatunek);
+                if (_gatunek.ID == 0)
+                    _context.GatunkiKsiążek.Add(_gatunek);
+                else
+                    _context.GatunkiKsiążek.Update(_gatunek);
+
+                _context.SaveChanges();
+
+                MessageBox.Show(
+                    "Gatunek został zapisany.",
+                    "Sukces",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+
+                ZamknijOkno?.Invoke();
             }
-            else
+            catch (Exception ex)
             {
-                _context.GatunkiKsiążek.Update(_gatunek);
+                MessageBox.Show(
+                    $"Wystąpił błąd podczas zapisu:\n{ex.Message}",
+                    "Błąd",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
 
-            _context.SaveChanges();
-            ZamknijOkno?.Invoke();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

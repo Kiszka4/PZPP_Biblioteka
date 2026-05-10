@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Input;
 
 namespace PZPP_Biblioteka
 {
@@ -29,6 +30,16 @@ namespace PZPP_Biblioteka
             DataContext = _viewModel;
         }
 
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is KsiążkaViewModel vm &&
+                vm.SelectedKsiążka != null)
+            {
+                var okno = new KsiążkaSzczegółyWindow(vm.SelectedKsiążka);
+
+                okno.ShowDialog();
+            }
+        }
 
     }
 }

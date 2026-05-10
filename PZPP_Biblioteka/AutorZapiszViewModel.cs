@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PZPP_Biblioteka
@@ -38,14 +39,61 @@ namespace PZPP_Biblioteka
 
         private void Zapisz(object obj)
         {
+            // WALIDACJA
+
+            if (string.IsNullOrWhiteSpace(Imię))
+            {
+                MessageBox.Show(
+                    "Imię autora nie może być puste.",
+                    "Błąd",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(Nazwisko))
+            {
+                MessageBox.Show(
+                    "Nazwisko autora nie może być puste.",
+                    "Błąd",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            // PRZYPISANIE DANYCH
+
             _autor.Imię = Imię;
             _autor.Nazwisko = Nazwisko;
-            if (_autor.ID == 0)
-                _context.Autorzy.Add(_autor);
-            else
-                _context.Autorzy.Update(_autor);
-            _context.SaveChanges();
-            ZamknijOkno?.Invoke();
+
+            try
+            {
+                if (_autor.ID == 0)
+                    _context.Autorzy.Add(_autor);
+                else
+                    _context.Autorzy.Update(_autor);
+
+                _context.SaveChanges();
+
+                MessageBox.Show(
+                    "Autor został zapisany.",
+                    "Sukces",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+
+                ZamknijOkno?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Wystąpił błąd podczas zapisu:\n{ex.Message}",
+                    "Błąd",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

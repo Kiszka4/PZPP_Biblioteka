@@ -34,17 +34,33 @@ namespace PZPP_Biblioteka
                 .RuleFor(k => k.Nazwisko, f => f.Name.LastName())
                 .Generate(20);
 
-            var książki = new Faker<Książka>("pl")
-                .RuleFor(k => k.Tytuł, f => f.Lorem.Sentence(3))
-                .RuleFor(p => p.IloscNaStanie, f => f.Random.Int(0, 40))
-                .RuleFor(p => p.ISBN, f => f.Random.Int(100000000, 999999999))
-                .RuleFor(p => p.GatunekKsiążki, f => f.PickRandom(gatunki))
-                .RuleFor(p => p.Autor, f => f.PickRandom(autorzy))
-                .Generate(20);
+            var przymiotniki = new[] { "Cichy", "Mroczny", "Zapomniany" };
+            var rzeczowniki = new[] { "Las", "Dom", "Sekret" };
+
+            var random = new Random();
+            var unikalneTytuly = new HashSet<string>();
+
+            while (unikalneTytuly.Count < 9) // ile książek chcesz
+            {
+
+                var tytul = $"{przymiotniki[random.Next(przymiotniki.Length)]} {rzeczowniki[random.Next(rzeczowniki.Length)]}";
+
+                unikalneTytuly.Add(tytul);
+            }
+
+
+            var ksiazki = unikalneTytuly.Select(t => new Książka
+            {
+                Tytuł = t,
+                IloscNaStanie = random.Next(0, 10),
+                ISBN = random.Next(100000000, 999999999),
+                GatunekKsiążki = gatunki[random.Next(gatunki.Count)],
+                Autor = autorzy[random.Next(autorzy.Count)]
+            }).ToList();
 
             context.GatunkiKsiążek.AddRange(gatunki);
             context.Autorzy.AddRange(autorzy);
-            context.Książki.AddRange(książki);
+            context.Książki.AddRange(ksiazki);
             context.SaveChanges();
         }
     }

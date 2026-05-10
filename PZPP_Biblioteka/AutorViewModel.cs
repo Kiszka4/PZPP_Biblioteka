@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PZPP_Biblioteka
@@ -52,9 +53,18 @@ namespace PZPP_Biblioteka
         private void UsunAutora(object obj)
         {
             if (SelectedAutor == null) return;
-            _context.Autorzy.Remove(SelectedAutor);
-            _context.SaveChanges();
-            OdswiezAutorzy();
+            var wynik = MessageBox.Show(
+                        $"Czy na pewno chcesz usunąć autora:\n{SelectedAutor.Imię} {SelectedAutor.Nazwisko}?",
+                        "Potwierdzenie usunięcia",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning);
+
+            if (wynik == MessageBoxResult.Yes)
+            {
+                _context.Autorzy.Remove(SelectedAutor);
+                _context.SaveChanges();
+                OdswiezAutorzy();
+            }
         }
 
         public void OdswiezAutorzy()

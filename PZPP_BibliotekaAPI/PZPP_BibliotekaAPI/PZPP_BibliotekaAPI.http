@@ -1,0 +1,7 @@
+@PZPP_BibliotekaAPI_HostAddress = http://localhost:5053
+
+GET {{PZPP_BibliotekaAPI_HostAddress}}/api/ksiazki
+Accept: application/json
+
+
+###

@@ -12,9 +12,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-
-
         <ListView Grid.Row="1" ItemsSource="{Binding Gatunki}"
                   SelectedItem="{Binding SelectedGatunek, Mode=TwoWay}"
                   Background="LightBlue"

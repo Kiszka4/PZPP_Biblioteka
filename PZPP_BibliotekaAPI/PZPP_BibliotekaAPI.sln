@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37203.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PZPP_BibliotekaAPI", "PZPP_BibliotekaAPI\PZPP_BibliotekaAPI.csproj", "{3D7025C0-34DB-4687-A329-49639EC13BA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PZPP_Biblioteka", "..\PZPP_Biblioteka\PZPP_Biblioteka\PZPP_Biblioteka.csproj", "{3929AD89-A0B4-ECAE-8B8F-D030860804CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D7025C0-34DB-4687-A329-49639EC13BA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D7025C0-34DB-4687-A329-49639EC13BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D7025C0-34DB-4687-A329-49639EC13BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D7025C0-34DB-4687-A329-49639EC13BA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3929AD89-A0B4-ECAE-8B8F-D030860804CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3929AD89-A0B4-ECAE-8B8F-D030860804CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3929AD89-A0B4-ECAE-8B8F-D030860804CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3929AD89-A0B4-ECAE-8B8F-D030860804CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B8C38F5-02C5-460C-87AD-5BCBCA870F0F}
+	EndGlobalSection
+EndGlobal

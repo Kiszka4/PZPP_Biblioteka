@@ -1,0 +1,25 @@
+﻿<Window x:Class="PZPP_Biblioteka.KsiążkaSzczegółyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PZPP_Biblioteka"
+        mc:Ignorable="d"
+        Title="KsiążkaSzczegółyWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel Margin="20">
+
+            <TextBlock Text="{Binding Tytuł}" FontSize="22"/>
+
+            <TextBlock Text="{Binding Autor.Imię}"/>
+            <TextBlock Text="{Binding Autor.Nazwisko}"/>
+
+            <TextBlock Text="{Binding ISBN}"/>
+
+            <TextBlock Text="{Binding GatunekKsiążki.Nazwa}"/>
+
+            <TextBlock Text="{Binding IloscNaStanie}"/>
+
+        </StackPanel>
+    </Grid>
+</Window>

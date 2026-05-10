@@ -19,5 +19,6 @@ namespace PZPP_Biblioteka
         public int? AutorID { get; set; }
         public GatunekKsiążki GatunekKsiążki { get; set; }
         public int GatunekID { get; set; }
+        public int DostepnoscWBibliotece2 { get; set; }
     }
 }
