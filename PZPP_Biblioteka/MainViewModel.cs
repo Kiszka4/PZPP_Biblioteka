@@ -11,6 +11,7 @@ namespace PZPP_Biblioteka
         public ICommand OpenGatunekWindowCommand { get; }
         public ICommand OpenKsiążkaWindowCommand { get; }
         public ICommand OpenAutorWindowCommand { get; }
+        public ICommand OpenFiliaWindowCommand { get; }
 
         public MainViewModel(IServiceProvider serviceProvider)
         {
@@ -18,6 +19,7 @@ namespace PZPP_Biblioteka
             OpenGatunekWindowCommand = new RelayCommand(OpenGatunekWindow);
             OpenKsiążkaWindowCommand = new RelayCommand(OpenKsiążkaWindow);
             OpenAutorWindowCommand = new RelayCommand(OpenAutorWindow);
+            OpenFiliaWindowCommand = new RelayCommand(OpenFiliaWindow);
         }
 
         private void OpenGatunekWindow(object obj)
@@ -44,6 +46,15 @@ namespace PZPP_Biblioteka
             var viewModel = _serviceProvider.GetRequiredService<AutorViewModel>();
             window.DataContext = viewModel;
             viewModel.OdswiezAutorzy();
+            window.ShowDialog();
+        }
+
+        private void OpenFiliaWindow(object obj)
+        {
+            var window = _serviceProvider.GetRequiredService<FiliaWindow>();
+            var viewModel = _serviceProvider.GetRequiredService<FiliaViewModel>();
+            window.DataContext = viewModel;
+            viewModel.OdswiezFilie();
             window.ShowDialog();
         }
     }
