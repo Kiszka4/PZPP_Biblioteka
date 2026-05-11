@@ -1,10 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PZPP_Biblioteka
 {
@@ -13,6 +7,8 @@ namespace PZPP_Biblioteka
         public DbSet<Książka> Książki { get; set; }
         public DbSet<GatunekKsiążki> GatunkiKsiążek { get; set; }
         public DbSet<Autor> Autorzy { get; set; }
+        public DbSet<Filia> Filie { get; set; }
+        public DbSet<StanMagazynowy> StanyMagazynowe { get; set; }
 
         public Biblioteka(DbContextOptions<Biblioteka> options) : base(options) { }
 
@@ -27,6 +23,16 @@ namespace PZPP_Biblioteka
                 .HasMany(a => a.Książki)
                 .WithOne(k => k.Autor)
                 .HasForeignKey(k => k.AutorID);
+
+            modelBuilder.Entity<StanMagazynowy>()
+                .HasOne(s => s.Książka)
+                .WithMany(k => k.StanyMagazynowe)
+                .HasForeignKey(s => s.KsiążkaISBN);
+
+            modelBuilder.Entity<StanMagazynowy>()
+                .HasOne(s => s.Filia)
+                .WithMany(f => f.StanyMagazynowe)
+                .HasForeignKey(s => s.FiliaID);
         }
     }
 }
