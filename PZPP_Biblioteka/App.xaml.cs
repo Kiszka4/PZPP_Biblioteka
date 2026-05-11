@@ -7,7 +7,7 @@ namespace PZPP_Biblioteka
 {
     public partial class App : Application
     {
-        public static IHost AppHost { get; private set; }
+        public static IHost AppHost { get; private set; } = null!;
 
         public App()
         {
@@ -23,11 +23,13 @@ namespace PZPP_Biblioteka
                     services.AddTransient<KsiążkaViewModel>();
                     services.AddTransient<KsiążkaZapiszViewModel>();
                     services.AddTransient<AutorViewModel>();
+                    services.AddTransient<FiliaViewModel>();
 
                     services.AddSingleton<MainWindow>();
                     services.AddTransient<GatunekWindow>();
                     services.AddTransient<KsiążkaWindow>();
                     services.AddTransient<AutorWindow>();
+                    services.AddTransient<FiliaWindow>();
                     services.AddTransient<GatunekDodajWindow>();
                     services.AddTransient<KsiążkaDodajWindow>();
                     services.AddTransient<GatunekEdytujWindow>();
