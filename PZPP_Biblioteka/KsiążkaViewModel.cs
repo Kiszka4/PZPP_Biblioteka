@@ -1,13 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PZPP_Biblioteka;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -18,7 +15,8 @@ namespace PZPP_Biblioteka
         private readonly Biblioteka _context;
         private readonly ApiService _api;
         public ObservableCollection<Książka> Książki { get; set; }
-    
+        public ObservableCollection<Autor> Autorzy { get; set; }
+        public ObservableCollection<GatunekKsiążki> Gatunki { get; set; }
 
         public ICommand PokazDodajKsiążkaCommand { get; }
         public ICommand EdytujKsiążkaCommand { get; }
@@ -37,33 +35,48 @@ namespace PZPP_Biblioteka
                 {
                     _selectedKsiążka = value;
                     OnPropertyChanged();
+                    WybranyAutor = value?.Autor;
+                    WybranyGatunek = value?.GatunekKsiążki;
                 }
             }
         }
+
+        private Autor _wybranyAutor;
+        public Autor WybranyAutor
+        {
+            get => _wybranyAutor;
+            set { _wybranyAutor = value; OnPropertyChanged(); }
+        }
+
+        private GatunekKsiążki _wybranyGatunek;
+        public GatunekKsiążki WybranyGatunek
+        {
+            get => _wybranyGatunek;
+            set { _wybranyGatunek = value; OnPropertyChanged(); }
+        }
+
         private string _tytuł;
         public string Tytuł
         {
             get => _tytuł;
-            set
-            {
-                _tytuł = value;
-                OnPropertyChanged();
-            }
+            set { _tytuł = value; OnPropertyChanged(); }
         }
+
         private async void ZaladujDostepnosc()
         {
             var lista = Książki.ToList();
-
             foreach (var k in lista)
             {
-                var wynik = await _api.PobierzDostepnosc(k.Tytuł);
-
-                Application.Current.Dispatcher.Invoke(() =>
+                try
                 {
-                    k.DostepnoscWBibliotece2 = wynik;
-                });
+                    var wynik = await _api.PobierzDostepnosc(k.Tytuł);
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        k.DostepnoscWBibliotece2 = wynik;
+                    });
+                }
+                catch { }
             }
-
             OnPropertyChanged(nameof(Książki));
         }
 
@@ -71,14 +84,10 @@ namespace PZPP_Biblioteka
         public int DostepnoscWBibliotece2
         {
             get => _dostepnosc;
-            set
-            {
-                _dostepnosc = value;
-                OnPropertyChanged();
-            }
+            set { _dostepnosc = value; OnPropertyChanged(); }
         }
-        private string _wyszukaj;
 
+        private string _wyszukaj;
         public string Wyszukaj
         {
             get => _wyszukaj;
@@ -87,9 +96,10 @@ namespace PZPP_Biblioteka
                 _wyszukaj = value;
                 OnPropertyChanged();
                 FiltrujKsiążki();
-                
             }
         }
+
+        public int LiczbaEgzemplarzy => Książki.Sum(k => k.IloscNaStanie);
 
         public KsiążkaViewModel(Biblioteka context)
         {
@@ -99,6 +109,11 @@ namespace PZPP_Biblioteka
                             .Include(k => k.Autor)
                             .Include(k => k.GatunekKsiążki)
                             .ToList());
+            Autorzy = new ObservableCollection<Autor>(_context.Autorzy.ToList());
+            Gatunki = new ObservableCollection<GatunekKsiążki>(_context.GatunkiKsiążek.ToList());
+
+            Książki.CollectionChanged += (s, e) => OnPropertyChanged(nameof(LiczbaEgzemplarzy));
+
             PokazDodajKsiążkaCommand = new RelayCommand(PokazDodajKsiążka);
             EdytujKsiążkaCommand = new RelayCommand(EdytujKsiążka, _ => SelectedKsiążka != null);
             UsunKsiążkaCommand = new RelayCommand(UsunKsiążka, _ => SelectedKsiążka != null);
@@ -114,10 +129,10 @@ namespace PZPP_Biblioteka
             okno.ShowDialog();
             OdswiezKsiążki();
         }
+
         private void EdytujKsiążka(object obj)
         {
             if (SelectedKsiążka == null) return;
-
             var okno = new KsiążkaEdytujWindow(_context, SelectedKsiążka);
             okno.ShowDialog();
             OdswiezKsiążki();
@@ -127,24 +142,27 @@ namespace PZPP_Biblioteka
         {
             if (SelectedKsiążka == null) return;
 
+            if (string.IsNullOrWhiteSpace(SelectedKsiążka.Tytuł))
+            {
+                MessageBox.Show("Tytuł książki jest wymagany!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (SelectedKsiążka.IloscNaStanie < 0)
+            {
+                MessageBox.Show("Ilość na stanie nie może być ujemna!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             var istniejacy = _context.Książki.FirstOrDefault(p => p.ISBN == SelectedKsiążka.ISBN);
             if (istniejacy != null)
             {
                 istniejacy.Tytuł = SelectedKsiążka.Tytuł;
                 istniejacy.IloscNaStanie = SelectedKsiążka.IloscNaStanie;
                 istniejacy.ISBN = SelectedKsiążka.ISBN;
-                istniejacy.Autor = SelectedKsiążka.Autor;
-                //istniejacy.CenaJednostkowa = SelectedProdukt.CenaJednostkowa;
-                //istniejacy.VAT = SelectedProdukt.VAT;
+                istniejacy.Autor = WybranyAutor ?? SelectedKsiążka.Autor;
                 istniejacy.GatunekID = SelectedKsiążka.GatunekID;
-
                 _context.SaveChanges();
-            }
-
-            if (string.IsNullOrWhiteSpace(SelectedKsiążka.Tytuł))
-            {
-                MessageBox.Show("Tytuł książki jest wymagany!");
-                return;
             }
 
             ZamknijOkno?.Invoke();
@@ -153,9 +171,8 @@ namespace PZPP_Biblioteka
         private void UsunKsiążka(object obj)
         {
             if (SelectedKsiążka == null) return;
-
-            var wynik = MessageBox.Show($"Czy na pewno chcesz usunąć książkę:\n{SelectedKsiążka.Tytuł}?","Potwierdzenie usunięcia",MessageBoxButton.YesNo,MessageBoxImage.Warning);
-
+            var wynik = MessageBox.Show($"Czy na pewno chcesz usunąć książkę:\n{SelectedKsiążka.Tytuł}?",
+                "Potwierdzenie usunięcia", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (wynik == MessageBoxResult.Yes)
             {
                 _context.Książki.Remove(SelectedKsiążka);
@@ -168,9 +185,8 @@ namespace PZPP_Biblioteka
         {
             Książki.Clear();
             foreach (var ksiazka in _context.Książki.Include(k => k.GatunekKsiążki).Include(k => k.Autor).ToList())
-            {
                 Książki.Add(ksiazka);
-            }
+            OnPropertyChanged(nameof(LiczbaEgzemplarzy));
         }
 
         private void FiltrujKsiążki()
@@ -180,51 +196,32 @@ namespace PZPP_Biblioteka
                 OdswiezKsiążki();
                 return;
             }
-
             Książki.Clear();
-
-            var tekst = Wyszukaj?.ToLower() ?? "";
-
+            var tekst = Wyszukaj.ToLower();
             var wynik = _context.Książki
                 .Include(k => k.Autor)
                 .Include(k => k.GatunekKsiążki)
                 .Where(k =>
-
-                    k.Tytuł.ToLower().Contains(tekst)
-
-                    || k.Autor.Imię.ToLower().Contains(tekst)
-
-                    || k.Autor.Nazwisko.ToLower().Contains(tekst)
-
-                    || k.GatunekKsiążki.Nazwa.ToLower().Contains(tekst)
-                )
+                    k.Tytuł.ToLower().Contains(tekst) ||
+                    k.Autor.Imię.ToLower().Contains(tekst) ||
+                    k.Autor.Nazwisko.ToLower().Contains(tekst) ||
+                    k.GatunekKsiążki.Nazwa.ToLower().Contains(tekst))
                 .ToList();
-
             foreach (var k in wynik)
-            {
                 Książki.Add(k);
-            }
+            OnPropertyChanged(nameof(LiczbaEgzemplarzy));
         }
 
         private void SortujAlfabetycznie()
         {
-            var posortowane = Książki
-                .OrderBy(k => k.Tytuł)
-                .ToList();
-
+            var posortowane = Książki.OrderBy(k => k.Tytuł).ToList();
             Książki.Clear();
-
             foreach (var k in posortowane)
-            {
                 Książki.Add(k);
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
-
-
 }
-
