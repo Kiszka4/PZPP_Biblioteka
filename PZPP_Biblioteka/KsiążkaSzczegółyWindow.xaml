@@ -5,21 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PZPP_Biblioteka"
         mc:Ignorable="d"
-        Title="KsiążkaSzczegółyWindow" Height="450" Width="800">
-    <Grid>
-        <StackPanel Margin="20">
+        Title="Szczegóły Książki" Height="380" Width="450"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid Background="#f0f7f4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <TextBlock Text="{Binding Tytuł}" FontSize="22"/>
+        <Border Grid.Row="0" Background="#2e7d5e" Padding="15,10">
+            <TextBlock Text="📖 Szczegóły książki" Foreground="White"
+                       FontSize="15" FontWeight="Bold"/>
+        </Border>
 
-            <TextBlock Text="{Binding Autor.Imię}"/>
-            <TextBlock Text="{Binding Autor.Nazwisko}"/>
+        <StackPanel Grid.Row="1" Margin="20,15">
+            <TextBlock Text="{Binding Tytuł}" FontSize="20"
+                       FontWeight="Bold" Foreground="#1a3d2b" Margin="0,0,0,12"/>
 
-            <TextBlock Text="{Binding ISBN}"/>
+            <Border Background="White" CornerRadius="8" Padding="15,12"
+                    BorderBrush="#d0e8db" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-            <TextBlock Text="{Binding GatunekKsiążki.Nazwa}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Autor:"
+                               Foreground="#7a7974" FontSize="13" Margin="0,4"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1"
+                               Text="{Binding Autor.PełneNazwisko}"
+                               Foreground="#1a3d2b" FontWeight="SemiBold" FontSize="13" Margin="0,4"/>
 
-            <TextBlock Text="{Binding IloscNaStanie}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="ISBN:"
+                               Foreground="#7a7974" FontSize="13" Margin="0,4"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1"
+                               Text="{Binding ISBN}"
+                               Foreground="#1a3d2b" FontSize="13" Margin="0,4"/>
 
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Gatunek:"
+                               Foreground="#7a7974" FontSize="13" Margin="0,4"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1"
+                               Text="{Binding GatunekKsiążki.Nazwa}"
+                               Foreground="#1a3d2b" FontSize="13" Margin="0,4"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Ilość na stanie:"
+                               Foreground="#7a7974" FontSize="13" Margin="0,4"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1"
+                               Text="{Binding IloscNaStanie}"
+                               Foreground="#1a3d2b" FontWeight="Bold" FontSize="13" Margin="0,4"/>
+                </Grid>
+            </Border>
         </StackPanel>
     </Grid>
 </Window>
