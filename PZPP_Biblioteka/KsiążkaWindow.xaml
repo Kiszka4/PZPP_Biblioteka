@@ -1,7 +1,7 @@
 ﻿<Window x:Class="PZPP_Biblioteka.KsiążkaWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Zarządzaj Książkami" Height="640" Width="900">
+        Title="Zarządzaj Książkami" Height="640" Width="980">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Padding" Value="10,6"/>
@@ -56,9 +56,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="90"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="110"/>
                                 <ColumnDefinition Width="160"/>
-                                <ColumnDefinition Width="130"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0"
                                        Text="{Binding ISBN}"
@@ -73,17 +72,14 @@
                                            FontSize="12"/>
                             </StackPanel>
                             <TextBlock Grid.Column="2"
-                                       Text="{Binding IloscNaStanie, StringFormat='Szt.: {0}'}"
+                                       Text="{Binding IloscNaStanie, StringFormat='W filii: {0} szt.'}"
                                        VerticalAlignment="Center"
-                                       Foreground="#333" FontSize="12" Margin="5,0"/>
+                                       Foreground="#2e7d5e" FontSize="12"
+                                       FontWeight="SemiBold" Margin="5,0"/>
                             <TextBlock Grid.Column="3"
                                        Text="{Binding Autor.PełneNazwisko}"
                                        VerticalAlignment="Center"
                                        Foreground="#555" FontSize="12" Margin="5,0"/>
-                            <TextBlock Grid.Column="4"
-                                       Text="{Binding DostepnoscWBibliotece2, StringFormat='Filia 2: {0} szt.'}"
-                                       VerticalAlignment="Center"
-                                       Foreground="#888" FontSize="11" Margin="5,0"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
@@ -97,14 +93,24 @@
                            Foreground="#555" FontSize="13"/>
                 <TextBlock Text="{Binding LiczbaEgzemplarzy}"
                            FontWeight="Bold" FontSize="13" Foreground="#2e7d5e"/>
+                <TextBlock Text=" | Wybrana filia: "
+                           Foreground="#555" FontSize="13" Margin="15,0,0,0"/>
+                <TextBlock Text="{Binding WybranaFilia.Nazwa, FallbackValue='wszystkie'}"
+                           FontWeight="Bold" FontSize="13" Foreground="#2e7d5e"/>
             </StackPanel>
         </Border>
 
         <Border Grid.Row="3" Background="#2e7d5e" Padding="10,8">
             <DockPanel>
                 <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="🏛️" Foreground="White" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <ComboBox Width="150" Height="30"
+                              ItemsSource="{Binding Filie}"
+                              DisplayMemberPath="Nazwa"
+                              SelectedItem="{Binding WybranaFilia, Mode=TwoWay}"
+                              Margin="0,0,10,0"/>
                     <TextBlock Text="🔍" Foreground="White" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                    <TextBox Width="220" Height="30"
+                    <TextBox Width="180" Height="30"
                              Text="{Binding Wyszukaj, UpdateSourceTrigger=PropertyChanged}"
                              VerticalContentAlignment="Center" Padding="8,0"/>
                 </StackPanel>
