@@ -1,27 +1,60 @@
 ﻿<Window x:Class="PZPP_Biblioteka.AutorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Zarządzaj Autorami" Height="450" Width="400">
-    <Grid>
+        Title="Zarządzaj Autorami" Height="450" Width="500">
+    <Grid Background="#f5faf7">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListView Grid.Row="0" ItemsSource="{Binding Autorzy}"
+
+        <Border Grid.Row="0" Background="#2e7d5e" Padding="15,10">
+            <TextBlock Text="✍️ Autorzy" Foreground="White"
+                       FontSize="18" FontWeight="Bold"/>
+        </Border>
+
+        <ListView Grid.Row="1"
+                  ItemsSource="{Binding Autorzy}"
                   SelectedItem="{Binding SelectedAutor, Mode=TwoWay}"
-                  Background="LightYellow" Margin="5">
+                  Background="#f5faf7" BorderThickness="0" Margin="10">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Margin" Value="0,2"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#c8e6d8"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#e0f2e9"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="50"/>
-                    <GridViewColumn Header="Imię" DisplayMemberBinding="{Binding Imię}" Width="120"/>
-                    <GridViewColumn Header="Nazwisko" DisplayMemberBinding="{Binding Nazwisko}" Width="150"/>
+                    <GridViewColumn Header="Imię" DisplayMemberBinding="{Binding Imię}" Width="160"/>
+                    <GridViewColumn Header="Nazwisko" DisplayMemberBinding="{Binding Nazwisko}" Width="200"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-            <Button Content="Dodaj" Command="{Binding PokazDodajAutorCommand}" Margin="5"/>
-            <Button Content="Edytuj" Command="{Binding EdytujAutorCommand}" Margin="5"/>
-            <Button Content="Usuń" Command="{Binding UsunAutorCommand}" Margin="5"/>
-        </StackPanel>
+
+        <Border Grid.Row="2" Background="#2e7d5e" Padding="10,8">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="➕ Dodaj" Command="{Binding PokazDodajAutorCommand}"
+                        Background="#4caf50" Foreground="White" Margin="3"
+                        Padding="10,6" BorderThickness="0"/>
+                <Button Content="✏️ Edytuj" Command="{Binding EdytujAutorCommand}"
+                        Background="#ff9800" Foreground="White" Margin="3"
+                        Padding="10,6" BorderThickness="0"/>
+                <Button Content="🗑️ Usuń" Command="{Binding UsunAutorCommand}"
+                        Background="#e53935" Foreground="White" Margin="3"
+                        Padding="10,6" BorderThickness="0"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

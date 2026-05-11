@@ -6,28 +6,58 @@
         xmlns:local="clr-namespace:PZPP_Biblioteka"
         mc:Ignorable="d"
         Title="Zarządzaj Gatunkami" Height="450" Width="400">
-    <Grid>
+    <Grid Background="#f5faf7">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListView Grid.Row="1" ItemsSource="{Binding Gatunki}"
+
+        <Border Grid.Row="0" Background="#2e7d5e" Padding="15,10">
+            <TextBlock Text="📖 Gatunki Książek" Foreground="White"
+                       FontSize="18" FontWeight="Bold"/>
+        </Border>
+
+        <ListView Grid.Row="1"
+                  ItemsSource="{Binding Gatunki}"
                   SelectedItem="{Binding SelectedGatunek, Mode=TwoWay}"
-                  Background="LightBlue"
-                  Margin="5">
+                  Background="#f5faf7" BorderThickness="0" Margin="10">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Margin" Value="0,2"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#c8e6d8"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#e0f2e9"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="50"/>
-                    <GridViewColumn Header="Nazwa" DisplayMemberBinding="{Binding Nazwa}" Width="100"/>
+                    <GridViewColumn Header="Nazwa" DisplayMemberBinding="{Binding Nazwa}" Width="280"/>
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-            <Button Content="Dodaj" Command="{Binding PokazDodajGatunekCommand}" Margin="5"/>
-            <Button Content="Edytuj" Command="{Binding EdytujGatunekCommand}" Margin="5"/>
-            <Button Content="Usuń" Command="{Binding UsunGatunekCommand}" Margin="5"/>
-        </StackPanel>
+        <Border Grid.Row="2" Background="#2e7d5e" Padding="10,8">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="➕ Dodaj" Command="{Binding PokazDodajGatunekCommand}"
+                        Background="#4caf50" Foreground="White" Margin="3"
+                        Padding="10,6" BorderThickness="0"/>
+                <Button Content="✏️ Edytuj" Command="{Binding EdytujGatunekCommand}"
+                        Background="#ff9800" Foreground="White" Margin="3"
+                        Padding="10,6" BorderThickness="0"/>
+                <Button Content="🗑️ Usuń" Command="{Binding UsunGatunekCommand}"
+                        Background="#e53935" Foreground="White" Margin="3"
+                        Padding="10,6" BorderThickness="0"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
