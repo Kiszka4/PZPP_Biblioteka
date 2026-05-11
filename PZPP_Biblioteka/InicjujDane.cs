@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PZPP_Biblioteka
 {
@@ -14,7 +12,14 @@ namespace PZPP_Biblioteka
             if (context.Książki.Any())
                 return;
 
-            var faker = new Faker("pl");
+            var filie = new List<Filia>
+            {
+                new Filia { Nazwa = "Filia Główna", Lokalizacja = "ul. Biblioteczna 1, Gdańsk" },
+                new Filia { Nazwa = "Filia nr 2", Lokalizacja = "ul. Morska 15, Gdynia" },
+                new Filia { Nazwa = "Filia nr 3", Lokalizacja = "ul. Kwiatowa 8, Sopot" }
+            };
+            context.Filie.AddRange(filie);
+            context.SaveChanges();
 
             var gatunki = new List<GatunekKsiążki>
             {
@@ -40,19 +45,16 @@ namespace PZPP_Biblioteka
             var random = new Random();
             var unikalneTytuly = new HashSet<string>();
 
-            while (unikalneTytuly.Count < 9) // ile książek chcesz
+            while (unikalneTytuly.Count < 9)
             {
-
                 var tytul = $"{przymiotniki[random.Next(przymiotniki.Length)]} {rzeczowniki[random.Next(rzeczowniki.Length)]}";
-
                 unikalneTytuly.Add(tytul);
             }
-
 
             var ksiazki = unikalneTytuly.Select(t => new Książka
             {
                 Tytuł = t,
-                IloscNaStanie = random.Next(0, 10),
+                IloscNaStanie = random.Next(1, 10),
                 ISBN = random.Next(100000000, 999999999),
                 GatunekKsiążki = gatunki[random.Next(gatunki.Count)],
                 Autor = autorzy[random.Next(autorzy.Count)]
@@ -61,6 +63,20 @@ namespace PZPP_Biblioteka
             context.GatunkiKsiążek.AddRange(gatunki);
             context.Autorzy.AddRange(autorzy);
             context.Książki.AddRange(ksiazki);
+            context.SaveChanges();
+
+            foreach (var ksiazka in ksiazki)
+            {
+                foreach (var filia in filie)
+                {
+                    context.StanyMagazynowe.Add(new StanMagazynowy
+                    {
+                        KsiążkaISBN = ksiazka.ISBN,
+                        FiliaID = filia.ID,
+                        IloscNaStanie = random.Next(0, 8)
+                    });
+                }
+            }
             context.SaveChanges();
         }
     }
