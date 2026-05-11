@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PZPP_Biblioteka
 {
@@ -11,14 +7,15 @@ namespace PZPP_Biblioteka
     {
         [Key]
         public int ISBN { get; set; }
-        public string Tytuł { get; set; }
+        public string? Tytuł { get; set; }
         public int IloscNaStanie { get; set; }
 
-        
-        public Autor Autor { get; set; }
+        public Autor? Autor { get; set; }
         public int? AutorID { get; set; }
-        public GatunekKsiążki GatunekKsiążki { get; set; }
+        public GatunekKsiążki? GatunekKsiążki { get; set; }
         public int GatunekID { get; set; }
         public int DostepnoscWBibliotece2 { get; set; }
+
+        public ICollection<StanMagazynowy> StanyMagazynowe { get; set; } = new List<StanMagazynowy>();
     }
 }
